@@ -6,6 +6,7 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import './styles.css'
 
+
 export async function generateMetadata(): Promise<Metadata> {
   const payload = await getPayload({ config: configPromise })
   const settings = await payload.findGlobal({ slug: 'site-settings' })
@@ -18,14 +19,11 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-export default async function FrontendLayout({ children }: { children: React.ReactNode }) {
-  const payload = await getPayload({ config: configPromise })
-  const settings = await payload.findGlobal({ slug: 'site-settings' })
-
+export default function FrontendLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <Navbar companyName={settings.companyName ?? 'Swajyot'} />
+        <Navbar />
         <main>{children}</main>
         <Footer />
       </body>
