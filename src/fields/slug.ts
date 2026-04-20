@@ -12,15 +12,15 @@ export const slugField = (sourceField: string = 'title'): Field => ({
   hooks: {
     beforeValidate: [
       ({ value, data }) => {
-        if (value) return value
-        const source = data?.[sourceField] as string | undefined
-        if (!source) return value
-        return source
+        // Always slugify: use submitted value if present, otherwise fall back to source field
+        const raw = ((value as string) || (data?.[sourceField] as string) || '').trim()
+        if (!raw) return value
+        return raw
           .toLowerCase()
-          .trim()
-          .replace(/[^\w\s-]/g, '')
-          .replace(/[\s_-]+/g, '-')
-          .replace(/^-+|-+$/g, '')
+          .replace(/[^\w\s-]/g, '')   // strip special chars (|, &, etc.)
+          .replace(/[\s_]+/g, '-')    // spaces/underscores → dash
+          .replace(/-{2,}/g, '-')     // collapse multiple dashes
+          .replace(/^-+|-+$/g, '')    // trim leading/trailing dashes
       },
     ],
   },
