@@ -12,5 +12,14 @@ export const Media: CollectionConfig = {
       required: true,
     },
   ],
-  upload: true,
+  upload: {
+    staticDir: 'media',
+    staticURL: '/api/media/file',
+    mimeTypes: ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml', 'image/gif'],
+    imageSizes: [
+      { name: 'thumbnail', width: 400, height: 300, position: 'centre' },
+      { name: 'card',      width: 768, height: 512, position: 'centre' },
+    ],
+    adminThumbnail: 'thumbnail',
+  },
 }
