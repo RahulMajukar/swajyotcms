@@ -2,6 +2,7 @@ import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import PayloadImage from '@/components/PayloadImage'
 
 export const metadata: Metadata = {
   title: 'Partners',
@@ -54,6 +55,12 @@ export default async function PartnersPage() {
               <div className="card-grid card-grid--3" style={{ marginTop: '28px' }}>
                 {items.map((p) => (
                   <Link key={p.id} href={`/explore/partners/${p.slug}`} className="card partner-card">
+                    {typeof p.logo === 'object' && p.logo?.url && (
+                      <PayloadImage
+                        image={p.logo}
+                        style={{ height: '44px', width: 'auto', objectFit: 'contain', marginBottom: '16px' }}
+                      />
+                    )}
                     <div className="card__title">{p.name}</div>
                     {p.description && <p className="card__desc">{p.description}</p>}
                     <span className="card__link">Learn more →</span>

@@ -2,6 +2,7 @@ import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import PayloadImage from '@/components/PayloadImage'
 
 export const metadata: Metadata = {
   title: 'About Us',
@@ -12,7 +13,7 @@ export default async function AboutPage() {
   const payload = await getPayload({ config: configPromise })
   const [settings, teamResult] = await Promise.all([
     payload.findGlobal({ slug: 'site-settings' }),
-    payload.find({ collection: 'team', sort: 'order', limit: 50 }),
+    payload.find({ collection: 'team', sort: 'order', limit: 50, depth: 1 }),
   ])
 
   return (
@@ -86,9 +87,16 @@ export default async function AboutPage() {
             <div className="card-grid card-grid--4" style={{ marginTop: '32px' }}>
               {teamResult.docs.map((member) => (
                 <div key={member.id} className="card team-card">
-                  <div className="team-card__avatar">
-                    {member.name.charAt(0).toUpperCase()}
-                  </div>
+                  {typeof member.photo === 'object' && member.photo?.url ? (
+                    <PayloadImage
+                      image={member.photo}
+                      style={{ width: '90px', height: '90px', borderRadius: '50%', objectFit: 'cover', margin: '0 auto 14px' }}
+                    />
+                  ) : (
+                    <div className="team-card__avatar">
+                      {member.name.charAt(0).toUpperCase()}
+                    </div>
+                  )}
                   <div className="team-card__name">{member.name}</div>
                   <div className="team-card__role">{member.role}</div>
                   {member.bio && <p className="card__desc" style={{ marginTop: '10px', textAlign: 'left' }}>{member.bio}</p>}

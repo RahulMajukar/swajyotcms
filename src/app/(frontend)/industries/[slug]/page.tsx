@@ -3,6 +3,7 @@ import configPromise from '@payload-config'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
+import RichText from '@/components/RichText'
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -44,7 +45,7 @@ export default async function IndustryDetailPage({ params }: Props) {
 
         {industry.description && (
           <section>
-            <div data-rich-text>{JSON.stringify(industry.description)}</div>
+            <RichText content={industry.description as any} />
           </section>
         )}
 
