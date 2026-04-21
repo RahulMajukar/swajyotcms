@@ -76,6 +76,7 @@ export interface Config {
     webinars: Webinar;
     team: Team;
     'contact-submissions': ContactSubmission;
+    pages: Page;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -92,6 +93,7 @@ export interface Config {
     webinars: WebinarsSelect<false> | WebinarsSelect<true>;
     team: TeamSelect<false> | TeamSelect<true>;
     'contact-submissions': ContactSubmissionsSelect<false> | ContactSubmissionsSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -531,6 +533,50 @@ export interface ContactSubmission {
   createdAt: string;
 }
 /**
+ * Static pages like Privacy Policy, Terms of Service, etc.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: number;
+  title: string;
+  /**
+   * Auto-generated from the title. Edit to override.
+   */
+  slug?: string | null;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  seo?: {
+    /**
+     * 50–60 characters recommended.
+     */
+    metaTitle?: string | null;
+    /**
+     * 150–160 characters recommended.
+     */
+    metaDescription?: string | null;
+    ogImage?: (number | null) | Media;
+    noIndex?: boolean | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -589,6 +635,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'contact-submissions';
         value: number | ContactSubmission;
+      } | null)
+    | ({
+        relationTo: 'pages';
+        value: number | Page;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -871,6 +921,26 @@ export interface ContactSubmissionsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  content?: T;
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        ogImage?: T;
+        noIndex?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -991,6 +1061,15 @@ export interface MainNav {
  */
 export interface Footer {
   id: number;
+  /**
+   * Short paragraph shown in the first column of the footer.
+   */
+  brandDescription?: string | null;
+  showAddress?: boolean | null;
+  showSocial?: boolean | null;
+  /**
+   * Add up to 4 columns of footer links (e.g. Solutions, Services, Company).
+   */
   columns?:
     | {
         heading: string;
@@ -1004,6 +1083,9 @@ export interface Footer {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Leave blank to auto-generate from company name and current year.
+   */
   copyright?: string | null;
   bottomLinks?:
     | {
@@ -1093,6 +1175,9 @@ export interface MainNavSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
+  brandDescription?: T;
+  showAddress?: T;
+  showSocial?: T;
   columns?:
     | T
     | {

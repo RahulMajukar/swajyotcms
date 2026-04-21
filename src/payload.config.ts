@@ -14,6 +14,7 @@ import { Partners } from './collections/Partners'
 import { Webinars } from './collections/Webinars'
 import { Team } from './collections/Team'
 import { ContactSubmissions } from './collections/ContactSubmissions'
+import { Pages } from './collections/Pages'
 
 import { SiteSettings } from './globals/SiteSettings'
 import { MainNav } from './globals/MainNav'
@@ -44,6 +45,8 @@ export default buildConfig({
     Team,
     // Admin
     ContactSubmissions,
+    // Static pages
+    Pages,
   ],
   globals: [
     SiteSettings,

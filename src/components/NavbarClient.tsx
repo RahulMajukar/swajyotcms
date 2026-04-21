@@ -8,9 +8,11 @@ export type NavItem  = { label: string; link?: string | null; children?: NavChil
 
 export default function NavbarClient({
   companyName,
+  logoUrl,
   items,
 }: {
   companyName: string
+  logoUrl?: string | null
   items: NavItem[]
 }) {
   const [open, setOpen]               = useState(false)
@@ -21,10 +23,18 @@ export default function NavbarClient({
       <div className="navbar__inner">
         {/* Brand */}
         <Link href="/" className="navbar__brand" onClick={() => setOpen(false)}>
-          <div>
-            <span className="navbar__brand-name">{companyName}</span>
-            <span className="navbar__brand-tag">Technologies Pvt. Ltd.</span>
-          </div>
+          {logoUrl ? (
+            <img
+              src={logoUrl}
+              alt={companyName}
+              style={{ height: '40px', width: 'auto', objectFit: 'contain' }}
+            />
+          ) : (
+            <div>
+              <span className="navbar__brand-name">{companyName}</span>
+              <span className="navbar__brand-tag">Technologies Pvt. Ltd.</span>
+            </div>
+          )}
         </Link>
 
         {/* Desktop menu */}

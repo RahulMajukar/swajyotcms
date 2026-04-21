@@ -227,9 +227,9 @@ textarea { resize: vertical; min-height: 120px; }
 
 /* ─── FOOTER ─────────────────────────────────────────── */
 .footer { background: var(--bg-dark); color: #94a3b8; padding: 64px 0 0; }
-.footer__grid { display: grid; grid-template-columns: 1.5fr repeat(3, 1fr); gap: 40px; margin-bottom: 48px; }
-@media (max-width: 900px) { .footer__grid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 560px) { .footer__grid { grid-template-columns: 1fr; } }
+.footer__grid { display: grid; gap: 40px; margin-bottom: 48px; }
+@media (max-width: 900px) { .footer__grid { grid-template-columns: 1fr 1fr !important; } }
+@media (max-width: 560px) { .footer__grid { grid-template-columns: 1fr !important; } }
 .footer__brand-name { font-size: 1.2rem; font-weight: 800; color: #fff; margin-bottom: 8px; }
 .footer__brand-desc { font-size: 0.88rem; line-height: 1.7; margin-bottom: 20px; color: #94a3b8; }
 .footer__social { display: flex; gap: 10px; margin-top: 8px; }
