@@ -30,6 +30,12 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    components: {
+      graphics: {
+        Logo: '@/components/admin/AdminLogo',
+        Icon: '@/components/admin/AdminIcon',
+      },
+    },
   },
   collections: [
     // Auth
