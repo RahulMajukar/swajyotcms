@@ -27,17 +27,11 @@ export default async function Footer() {
         >
           {/* ── Brand column ── */}
           <div>
-            {logoUrl ? (
-              <img
-                src={logoUrl}
-                alt={settings.companyName ?? 'Swajyot Technologies'}
-                style={{ height: '48px', width: 'auto', objectFit: 'contain', marginBottom: '16px', filter: 'brightness(0) invert(1)' }}
-              />
-            ) : (
-              <div className="footer__brand-name">
-                {settings.companyName ?? 'Swajyot Technologies'}
-              </div>
-            )}
+            <img
+              src={logoUrl ?? '/images/logo-side.png'}
+              alt={settings.companyName ?? 'Swajyot Technologies'}
+              style={{ height: '52px', width: 'auto', objectFit: 'contain', marginBottom: '20px' }}
+            />
             <p className="footer__brand-desc">
               {footer.brandDescription ?? settings.tagline ?? 'Always Creating Value'}
             </p>

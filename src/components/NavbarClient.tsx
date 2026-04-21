@@ -23,18 +23,11 @@ export default function NavbarClient({
       <div className="navbar__inner">
         {/* Brand */}
         <Link href="/" className="navbar__brand" onClick={() => setOpen(false)}>
-          {logoUrl ? (
-            <img
-              src={logoUrl}
-              alt={companyName}
-              style={{ height: '40px', width: 'auto', objectFit: 'contain' }}
-            />
-          ) : (
-            <div>
-              <span className="navbar__brand-name">{companyName}</span>
-              <span className="navbar__brand-tag">Technologies Pvt. Ltd.</span>
-            </div>
-          )}
+          <img
+            src={logoUrl ?? '/images/logo-blue.png'}
+            alt={companyName}
+            style={{ height: '44px', width: 'auto', objectFit: 'contain' }}
+          />
         </Link>
 
         {/* Desktop menu */}
