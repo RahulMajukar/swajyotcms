@@ -1,5 +1,6 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -34,6 +35,13 @@ export default buildConfig({
       graphics: {
         Logo: '@/components/admin/AdminLogo',
         Icon: '@/components/admin/AdminIcon',
+      },
+      afterNavLinks: ['@/components/admin/SubmissionsBeforeList'],
+      views: {
+        formResponses: {
+          Component: '@/components/admin/FormResponsesView',
+          path: '/form-responses',
+        },
       },
     },
   },
@@ -70,5 +78,43 @@ export default buildConfig({
     },
   }),
   sharp,
-  plugins: [],
+  plugins: [
+    formBuilderPlugin({
+      fields: {
+        text: true,
+        textarea: true,
+        select: true,
+        email: true,
+        checkbox: true,
+        number: true,
+        message: true,
+        payment: false,
+        state: false,
+        country: false,
+      },
+      formOverrides: {
+        admin: { group: 'Forms' },
+        access: { read: () => true },
+      },
+      formSubmissionOverrides: {
+        admin: {
+          group: 'Forms',
+          defaultColumns: ['form', 'createdAt', 'viewResponses'],
+        },
+        fields: [
+          {
+            name: 'viewResponses',
+            type: 'ui',
+            admin: {
+              components: {
+                Cell: '@/components/admin/ViewResponsesCell',
+                Field: '@/components/admin/ViewResponsesCell',
+              },
+            },
+          },
+        ],
+      },
+      redirectRelationships: ['pages'],
+    }),
+  ],
 })

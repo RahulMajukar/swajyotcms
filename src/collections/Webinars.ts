@@ -61,9 +61,22 @@ export const Webinars: CollectionConfig = {
       relationTo: 'media',
     },
     {
+      name: 'registrationForm',
+      type: 'relationship',
+      relationTo: 'forms',
+      label: 'Registration Form (embed on page)',
+      admin: {
+        position: 'sidebar',
+        description: 'Select a form to show a registration modal on this webinar page. Takes priority over the URL below.',
+      },
+    },
+    {
       name: 'registrationUrl',
       type: 'text',
-      label: 'Registration / Event URL',
+      label: 'Registration URL (external fallback)',
+      admin: {
+        description: 'Used only if no Registration Form is selected above.',
+      },
     },
     {
       name: 'recordingUrl',

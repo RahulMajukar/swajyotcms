@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import PayloadImage from '@/components/PayloadImage'
 import RichText from '@/components/RichText'
+import RegisterModal from '@/components/RegisterModal'
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -40,9 +41,13 @@ export default async function WebinarDetailPage({ params }: Props) {
   if (!webinar) notFound()
 
   const status = webinar.eventStatus ?? 'upcoming'
+  const registrationForm = typeof webinar.registrationForm === 'object' && webinar.registrationForm !== null
+    ? webinar.registrationForm as any
+    : null
 
   return (
     <>
+      {/* ── Page Header ── */}
       <section className="page-header" style={{ position: 'relative', overflow: 'hidden' }}>
         {typeof webinar.coverImage === 'object' && webinar.coverImage?.url && (
           <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
@@ -56,7 +61,7 @@ export default async function WebinarDetailPage({ params }: Props) {
           <div className="breadcrumb">
             <Link href="/">Home</Link> <span>/</span>
             <Link href="/explore/webinars">Webinars</Link> <span>/</span>
-            {webinar.title}
+            <span style={{ color: '#fff' }}>{webinar.title}</span>
           </div>
           <span className={`status-badge ${STATUS_CLASS[status]}`} style={{ marginBottom: '16px', display: 'inline-block' }}>
             {status.replace('-', ' ')}
@@ -71,8 +76,12 @@ export default async function WebinarDetailPage({ params }: Props) {
             </p>
           )}
           <p>{webinar.shortDescription}</p>
-          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginTop: '8px' }}>
-            {webinar.registrationUrl && status !== 'past' && (
+          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginTop: '16px' }}>
+            {/* Registration: modal form takes priority over external URL */}
+            {status !== 'past' && registrationForm && (
+              <RegisterModal form={registrationForm} label="Register Now" />
+            )}
+            {status !== 'past' && !registrationForm && webinar.registrationUrl && (
               <a href={webinar.registrationUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
                 Register Now
               </a>
@@ -86,10 +95,12 @@ export default async function WebinarDetailPage({ params }: Props) {
         </div>
       </section>
 
+      {/* ── Body ── */}
       <section className="section">
         <div className="container">
           <div className="detail-layout">
             <div>
+              {/* Cover image */}
               {typeof webinar.coverImage === 'object' && webinar.coverImage?.url && (
                 <div style={{ marginBottom: '32px' }}>
                   <PayloadImage
@@ -99,13 +110,17 @@ export default async function WebinarDetailPage({ params }: Props) {
                 </div>
               )}
 
+              {/* Description */}
               {webinar.description && (
                 <div style={{ marginBottom: '32px' }}>
                   <h2 style={{ marginBottom: '16px' }}>About This Webinar</h2>
-                  <RichText content={webinar.description as any} />
+                  <div className="rich-text">
+                    <RichText content={webinar.description as any} />
+                  </div>
                 </div>
               )}
 
+              {/* Speakers */}
               {webinar.speakers && webinar.speakers.length > 0 && (
                 <div>
                   <h2 style={{ marginBottom: '20px' }}>Speakers</h2>
@@ -138,8 +153,9 @@ export default async function WebinarDetailPage({ params }: Props) {
               )}
             </div>
 
+            {/* ── Sidebar ── */}
             <aside>
-              <div className="aside-card">
+              <div className="aside-card" style={{ position: 'sticky', top: 'calc(var(--nav-h) + 24px)' }}>
                 {webinar.date && (
                   <div style={{ marginBottom: '16px' }}>
                     <div style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-muted)', marginBottom: '4px' }}>Date</div>
@@ -158,17 +174,24 @@ export default async function WebinarDetailPage({ params }: Props) {
                   </div>
                 )}
 
-                {webinar.registrationUrl && status !== 'past' && (
-                  <a href={webinar.registrationUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ display: 'block', textAlign: 'center', marginBottom: '10px' }}>
+                <hr style={{ border: 'none', borderTop: '1px solid var(--border)', margin: '0 0 16px' }} />
+
+                {status !== 'past' && registrationForm && (
+                  <RegisterModal form={registrationForm} label="Register Now" />
+                )}
+                {status !== 'past' && !registrationForm && webinar.registrationUrl && (
+                  <a href={webinar.registrationUrl} target="_blank" rel="noopener noreferrer"
+                    className="btn btn-primary" style={{ display: 'block', textAlign: 'center', marginBottom: '10px' }}>
                     Register Now
                   </a>
                 )}
                 {webinar.recordingUrl && (
-                  <a href={webinar.recordingUrl} target="_blank" rel="noopener noreferrer" className="btn btn-blue" style={{ display: 'block', textAlign: 'center', marginBottom: '10px' }}>
+                  <a href={webinar.recordingUrl} target="_blank" rel="noopener noreferrer"
+                    className="btn btn-blue" style={{ display: 'block', textAlign: 'center', marginBottom: '10px', marginTop: '10px' }}>
                     Watch Recording
                   </a>
                 )}
-                <Link href="/explore/webinars" className="back-link" style={{ marginTop: '8px', display: 'inline-flex' }}>
+                <Link href="/explore/webinars" className="back-link" style={{ marginTop: '12px', display: 'inline-flex' }}>
                   ← All Webinars
                 </Link>
               </div>

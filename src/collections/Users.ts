@@ -8,6 +8,17 @@ export const Users: CollectionConfig = {
   auth: true,
   fields: [
     // Email added by default
-    // Add more fields as needed
+    {
+      name: '_viewResponsesCell',
+      type: 'ui',
+      admin: {
+        disableListColumn: true,
+        disableListFilter: true,
+        components: {
+          Cell:  '@/components/admin/ViewResponsesCell',
+          Field: '@/components/admin/ViewResponsesCell',
+        },
+      },
+    },
   ],
 }
