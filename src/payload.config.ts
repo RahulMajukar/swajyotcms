@@ -100,6 +100,13 @@ export default buildConfig({
         admin: {
           group: 'Forms',
           defaultColumns: ['form', 'createdAt', 'viewResponses'],
+          preview: (doc) => {
+            const formId = typeof doc?.form === 'object' ? (doc.form as { id: string }).id : doc?.form
+            const base = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
+            return formId
+              ? `${base}/admin/form-responses?formId=${formId}`
+              : `${base}/admin/form-responses`
+          },
         },
         fields: [
           {
