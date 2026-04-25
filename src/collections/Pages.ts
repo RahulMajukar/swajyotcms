@@ -11,6 +11,8 @@ export const Pages: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', '_status', 'updatedAt'],
     description: 'Static pages like Privacy Policy, Terms of Service, etc.',
+    preview: (doc) =>
+      doc?.slug ? `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'}/pages/${doc.slug}` : null,
   },
   access: {
     read: ({ req }) => {

@@ -8,6 +8,8 @@ export const Services: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'updatedAt'],
     group: 'Content',
+    preview: (doc) =>
+      doc?.slug ? `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'}/services/${doc.slug}` : null,
   },
   versions: {
     drafts: true,

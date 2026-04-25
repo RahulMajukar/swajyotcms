@@ -8,6 +8,8 @@ export const Partners: CollectionConfig = {
     useAsTitle: 'name',
     defaultColumns: ['name', 'category', 'updatedAt'],
     group: 'Content',
+    preview: (doc) =>
+      doc?.slug ? `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'}/explore/partners/${doc.slug}` : null,
   },
   fields: [
     {

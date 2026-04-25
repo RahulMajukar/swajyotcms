@@ -7,6 +7,8 @@ export const Team: CollectionConfig = {
     defaultColumns: ['name', 'role', 'order', 'updatedAt'],
     group: 'Content',
     description: 'Team members shown on the About Us page.',
+    preview: () =>
+      `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'}/explore/about-us`,
   },
   fields: [
     {
