@@ -663,8 +663,54 @@ export interface Form {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Auto-generated from the title. Edit to override.
+   */
+  slug?: string | null;
+  /**
+   * Intro text shown above the form on the public page.
+   */
+  description?: string | null;
+  seo?: {
+    /**
+     * 50–60 characters recommended.
+     */
+    metaTitle?: string | null;
+    /**
+     * 150–160 characters recommended.
+     */
+    metaDescription?: string | null;
+    ogImage?: (number | null) | Media;
+    noIndex?: boolean | null;
+  };
+  /**
+   * Configure automated emails sent when this form is submitted. Use {{fieldName}} in templates to insert submitted values, {{allFields}} for a full table, {{formTitle}} for the form name.
+   */
+  emailSettings?: {
+    sendConfirmationEmail?: boolean | null;
+    sendNotificationEmail?: boolean | null;
+    /**
+     * The name attribute of the field in this form that holds the submitter's email (default: "email").
+     */
+    submitterEmailField?: string | null;
+    confirmationSubject?: string | null;
+    /**
+     * Leave blank to use the default template. Supports HTML.
+     */
+    confirmationBody?: string | null;
+    /**
+     * Comma-separated recipients. Leave blank to use the default MAIL_FROM address.
+     */
+    notifyTo?: string | null;
+    notificationSubject?: string | null;
+    /**
+     * Leave blank to use the default template. Supports HTML.
+     */
+    notificationBody?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * Static pages like Privacy Policy, Terms of Service, etc.
@@ -1249,8 +1295,31 @@ export interface FormsSelect<T extends boolean = true> {
         message?: T;
         id?: T;
       };
+  slug?: T;
+  description?: T;
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        ogImage?: T;
+        noIndex?: T;
+      };
+  emailSettings?:
+    | T
+    | {
+        sendConfirmationEmail?: T;
+        sendNotificationEmail?: T;
+        submitterEmailField?: T;
+        confirmationSubject?: T;
+        confirmationBody?: T;
+        notifyTo?: T;
+        notificationSubject?: T;
+        notificationBody?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
