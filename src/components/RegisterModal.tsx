@@ -7,7 +7,7 @@ type Form = {
   id: string
   title: string
   fields?: any[] | null
-  confirmationType?: string | null
+  confirmationType?: 'message' | 'redirect' | null
   confirmationMessage?: any
 }
 

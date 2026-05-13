@@ -231,7 +231,8 @@ export default buildConfig({
               : `${base}/admin/form-responses`
           },
         },
-        fields: [
+        fields: ({ defaultFields }) => [
+          ...defaultFields,
           {
             name: 'viewResponses',
             type: 'ui',
