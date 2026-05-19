@@ -25,6 +25,7 @@ import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0
 import { default as default_d500ae2ad98a0a33d640ae0ac1a3417c } from '@/components/admin/AdminIcon'
 import { default as default_b80a86fce1072afc84cd6a430a965697 } from '@/components/admin/AdminLogo'
 import { default as default_62f9d3411a1026624e8dc9d18ac41e6f } from '@/components/admin/SubmissionsBeforeList'
+import { default as default_c7155cbbcddc04a43cefd9095d372ed1 } from '@/components/admin/AuthSessionProvider'
 import { default as default_057618739ce52ca138ca34f3a66a8f7e } from '@/components/admin/FormResponsesViewWrapper'
 import { default as default_85e1ea7844be31c25df4a26c6640ce7a } from '@/components/admin/PublicFormsViewWrapper'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
@@ -58,6 +59,7 @@ export const importMap = {
   "@/components/admin/AdminIcon#default": default_d500ae2ad98a0a33d640ae0ac1a3417c,
   "@/components/admin/AdminLogo#default": default_b80a86fce1072afc84cd6a430a965697,
   "@/components/admin/SubmissionsBeforeList#default": default_62f9d3411a1026624e8dc9d18ac41e6f,
+  "@/components/admin/AuthSessionProvider#default": default_c7155cbbcddc04a43cefd9095d372ed1,
   "@/components/admin/FormResponsesViewWrapper#default": default_057618739ce52ca138ca34f3a66a8f7e,
   "@/components/admin/PublicFormsViewWrapper#default": default_85e1ea7844be31c25df4a26c6640ce7a,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
