@@ -3,10 +3,17 @@ import type { NextConfig } from 'next'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
+import { getAllowedOrigins } from './src/utilities/getServerURL'
+
 const __filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(__filename)
 
 const nextConfig: NextConfig = {
+  experimental: {
+    serverActions: {
+      allowedOrigins: getAllowedOrigins(),
+    },
+  },
   images: {
     localPatterns: [
       {

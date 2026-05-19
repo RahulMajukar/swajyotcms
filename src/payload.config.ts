@@ -25,18 +25,24 @@ import { Footer } from './globals/Footer'
 
 import { slugField } from './fields/slug'
 import { seoFields } from './fields/seo'
+import { getServerURL } from './utilities/getServerURL'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+const serverURL = getServerURL()
+
 export default buildConfig({
-  serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
+  serverURL,
+  csrf: [serverURL],
   admin: {
     user: Users.slug,
+    autoRefresh: true,
     importMap: {
       baseDir: path.resolve(dirname),
     },
     components: {
+      providers: ['@/components/admin/AuthSessionProvider'],
       graphics: {
         Logo: '@/components/admin/AdminLogo',
         Icon: '@/components/admin/AdminIcon',
@@ -105,7 +111,7 @@ export default buildConfig({
         admin: {
           group: 'Forms',
           preview: (doc) => {
-            const base = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
+            const base = getServerURL()
             return doc?.slug ? `${base}/forms/${doc.slug}` : null
           },
         },
@@ -225,7 +231,7 @@ export default buildConfig({
           defaultColumns: ['form', 'createdAt', 'viewResponses'],
           preview: (doc) => {
             const formId = typeof doc?.form === 'object' ? (doc.form as { id: string }).id : doc?.form
-            const base = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
+            const base = getServerURL()
             return formId
               ? `${base}/admin/form-responses?formId=${formId}`
               : `${base}/admin/form-responses`
